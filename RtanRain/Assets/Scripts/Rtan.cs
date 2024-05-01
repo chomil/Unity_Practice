@@ -5,7 +5,7 @@ using UnityEngine.XR;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    Vector3 Speed = new(3.5f, 0, 0);
+    Vector3 Speed = new(5f, 0, 0);
     float direction = 1f;
     SpriteRenderer renderer;
 
