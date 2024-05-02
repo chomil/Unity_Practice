@@ -840,6 +840,7 @@ MonoBehaviour:
   timeText: {fileID: 1894426671}
   curScore: {fileID: 1991991338}
   bestScore: {fileID: 836092247}
+  animator: {fileID: 1113652068}
 --- !u!4 &1429357398
 Transform:
   m_ObjectHideFlags: 0
