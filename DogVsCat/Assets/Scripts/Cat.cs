@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cat : MonoBehaviour
 {
+    public int type = 0;
     public GameObject hungryCat;
     public GameObject fullCat;
 
@@ -16,6 +17,22 @@ public class Cat : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(Random.Range(-9f, 9f), 30f);
+
+        if(type == 0)
+        {
+            speed = 2f;
+            maxExp = 5f;
+        }
+        else if (type == 1)
+        {
+            speed = 1f;
+            maxExp = 10f;
+        }
+        else if (type == 2)
+        {
+            speed = 5f;
+            maxExp = 3f;
+        }
     }
 
     void Update()
@@ -23,6 +40,10 @@ public class Cat : MonoBehaviour
         if (curExp < maxExp)
         {
             transform.position += Vector3.down * speed * Time.deltaTime;
+            if(transform.position.y < -16f)
+            {
+                GameManager.Instance.GameOver();
+            }
         }
         else
         {
@@ -41,17 +62,20 @@ public class Cat : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Food"))
         {
-            curExp += 1f;
-            curExp = Mathf.Min(curExp, maxExp);
-            front.localScale = new Vector3(curExp / maxExp, 1, 1);
             if (curExp < maxExp)
             {
+                curExp += 1f;
+                curExp = Mathf.Min(curExp, maxExp);
+                front.localScale = new Vector3(curExp / maxExp, 1, 1);
                 Destroy(collision.gameObject);
-            }
-            else
-            {
-                hungryCat.SetActive(false);
-                fullCat.SetActive(true);
+
+                if(curExp == maxExp)
+                {
+                    GameManager.Instance.AddScore();
+                    hungryCat.SetActive(false);
+                    fullCat.SetActive(true);
+                    Destroy(gameObject, 5f);
+                }
             }
         }
     }
